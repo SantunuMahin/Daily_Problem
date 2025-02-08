@@ -28,22 +28,22 @@ public:
 };
 
 
-How i solve the preblem :
+How I solve the problem :
 
 Below is a concise explanation of the code:
 
 Sorting:
-The array is sorted to enable the efficient two-pointer approach and to handle duplicates easily.
+The array is sorted to enable the efficient two-pointer approach and easily handle duplicates.
 
 Main Loop:
-Iterate through each number (index i) and skip duplicates to avoid redundant triplets.
+Could you go through each number (index i) and skip duplicates to avoid redundant triplets?
 
 Two-Pointer Approach:
 For each i, use two pointers (j starting from i + 1 and k from the end) to find two numbers that sum with nums[i] to zero:
 
 If the sum is less than zero, increment j to increase the sum.
 If the sum is greater than zero, decrement k to decrease the sum.
-If the sum equals zero, record the triplet, move both pointers, and skip any duplicate values for j.
+If the sum equals zero, record the triplet, move both pointers and skip any duplicate values for j.
 Return Result:
 After iterating through all elements, return the list of unique triplets that sum to zero.
 
