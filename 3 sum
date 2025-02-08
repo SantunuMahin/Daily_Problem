@@ -1,0 +1,50 @@
+# 3Sum 
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        int n= nums.size();
+        int sum;
+        vector<vector<int>> ans;
+        sort(nums.begin(),nums.end());
+        for(int i= 0; i<n;i++){
+            if(i > 0 && nums[i] == nums[i-1]) continue;
+            int j =i+1;
+            int k= n-1;
+            while(j<k){
+                
+                sum = nums[i]+nums[j]+nums[k];
+                if(sum<0)j++;
+                else if(sum>0) k--;
+                else if(sum==0){
+                    ans.push_back({nums[i],nums[j],nums[k]});
+                    j++;k--;
+                    while(j<k && nums[j]==nums[j-1]) j++;
+                }
+                
+            }
+        }
+        return ans;
+    }
+};
+
+
+How i solve the preblem :
+
+Below is a concise explanation of the code:
+
+Sorting:
+The array is sorted to enable the efficient two-pointer approach and to handle duplicates easily.
+
+Main Loop:
+Iterate through each number (index i) and skip duplicates to avoid redundant triplets.
+
+Two-Pointer Approach:
+For each i, use two pointers (j starting from i + 1 and k from the end) to find two numbers that sum with nums[i] to zero:
+
+If the sum is less than zero, increment j to increase the sum.
+If the sum is greater than zero, decrement k to decrease the sum.
+If the sum equals zero, record the triplet, move both pointers, and skip any duplicate values for j.
+Return Result:
+After iterating through all elements, return the list of unique triplets that sum to zero.
+
+This approach ensures each triplet is unique and operates in 𝑂(n^2)time complexity.
