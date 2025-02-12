@@ -1,0 +1,46 @@
+#  Leetcode problem no: 454.  4Sum II #
+
+
+class Solution {
+public:
+    int fourSumCount(vector<int>& nums1, vector<int>& nums2, vector<int>& nums3, vector<int>& nums4) {
+        int count =0;
+        unordered_map<int, int> map;
+        for(int a:nums1){
+            for(int b: nums2){
+                map[a+b]++;
+            }
+        }
+        
+        for(int c:nums3){
+            for(int d: nums4){
+                int tar = -(c+d); 
+                if(map.find(tar)!=map.end(tar))count+=map[tar];
+            }
+        }
+        
+
+        return count; 
+    }
+};|
+
+
+
+
+# Expalin  of the implementation:
+
+ **1.Build a Hash Map for the First Two Arrays:**
+   * Iterate over every pair of numbers from nums1 and nums2.
+   *Compute their sum and store it in a hash map (sumMap), where the key is the sum and the value is the number of times that sum appears.
+
+**2. Search for Complementary Sums in the Last Two Arrays:**
+  *Iterate over every pair of numbers from nums3 and nums4.
+  *For each pair, compute the sum c+d and then the complementary target value as −(c+d).
+  *Check if this target exists in sumMap. If it does, add the frequency (the count of that sum) to the overall count.
+	
+**3.Return the Final Count:**
+  *The variable count accumulates the number of quadruplets that sum to zero.
+   *Return count as the result.
+	 
+This approach efficiently counts the valid quadruplets by reducing a potentially
+O(n^4) problem to roughly O(n^2) using a hash map for quick lookups
