@@ -1,0 +1,55 @@
+# leetcode problem no: 18. 4Sum  #
+
+
+class Solution {
+public:
+    vector<vector<int>> fourSum(vector<int>& nums, int target) {
+        int n = nums.size();
+        vector<vector<int>> ans; 
+
+        sort(nums.begin(), nums.end());
+        
+        for (int i = 0; i < n ; i++) {
+            if(i>0 && nums[i]==nums[i-1])continue;
+            for (int j = i + 1; j < n ; j++) {
+                 if(j>i+1 && nums[j]==nums[j-1])continue;
+                int p = j + 1, q = n - 1;
+                
+                while (p < q) {
+                    long long sum = (long long)nums[i] + nums[j] + nums[p] + nums[q];
+
+                    if (sum < target) {
+                        p++;
+                    } else if (sum > target) {
+                        q--;
+                    } else {
+                        ans.push_back({nums[i], nums[j], nums[p], nums[q]});
+                        p++;
+                        q--;
+                        while(p<q && nums[p]==nums[p-1]) p++;
+                        while(p<q && nums[q]==nums[q+1]) q--;
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+};
+
+
+
+Explanation of fourSum Algorithm
+The function finds all unique quadruplets (𝑎,𝑏,𝑐,𝑑)in nums that sum to target using a sorted two-pointer approach.
+
+Steps:
+Sort the Array → Helps in avoiding duplicates and using two-pointer search.
+Fix Two Numbers (i, j) → Iterate using two nested loops.
+Skip duplicates to avoid redundant quadruplets.
+Use Two Pointers (p, q) to find pairs that sum to target - (nums[i] + nums[j]).
+Move p right if the sum is too small.
+Move q left if the sum is too large.
+Store valid quadruplets when sum matches the target.
+Skip duplicates for p and q.
+Return the result list containing all unique quadruplets.
+Time Complexity:
+𝑂(𝑛3)Better than brute force O(n^4))
