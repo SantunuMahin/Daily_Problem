@@ -32,13 +32,21 @@ public:
 
 
 // Explainations
-This C++ solution generates all unique permutations of a given list of numbers. It uses backtracking with a helper function to explore different permutations while avoiding duplicates. The key steps are:
+This solution generates all unique permutations of a given list of numbers. 
+It uses backtracking with a helper function to explore different permutations 
+while avoiding duplicates. The key steps are:
 
-1. Sorting the input array to easily detect duplicates.
+1. Sorting the input array to detect duplicates easily.
+
 2. Tracking used elements with a used boolean array.
-3. Backtracking by recursively adding numbers to a temporary list (templist) and removing them after exploring all possibilities.
-4. Skipping duplicates to ensure only unique permutations are stored in result.
-The permuteUnique function initializes the process and returns all unique permutations.
+
+3. Backtracking by recursively adding numbers to a temporary list (templist)
+ and removing them after exploring all possibilities.
+
+4. Skipping duplicates to ensure unique permutations are stored in the result.
+
+The permuteUnique function initializes the process and returns all unique
+ permutations.
 
 
 
