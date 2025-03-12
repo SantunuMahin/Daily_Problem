@@ -1,0 +1,47 @@
+class Solution {
+private:
+    void backtrack(vector<vector<int>>& result, vector<int>& templist, vector<int>& nums, vector<bool>& used) {
+        int n = nums.size();
+        if (templist.size() == n) {
+            result.push_back(templist);
+            return;
+        }
+        for (int i = 0; i < n; i++) {
+            if (used[i] || (i > 0 && nums[i] == nums[i - 1] && !used[i - 1])) continue;
+
+            used[i] = true;
+            templist.push_back(nums[i]);
+
+            backtrack(result, templist, nums, used);
+
+            templist.pop_back();
+            used[i] = false;
+        }
+    }
+
+public:
+    vector<vector<int>> permuteUnique(vector<int>& nums) {
+        vector<vector<int>> result;
+        vector<int> templist;
+        vector<bool> used(nums.size(), false);
+        sort(nums.begin(), nums.end());
+        backtrack(result, templist, nums, used);
+        return result;
+    }
+};
+
+
+// Explainations
+This C++ solution generates all unique permutations of a given list of numbers. It uses backtracking with a helper function to explore different permutations while avoiding duplicates. The key steps are:
+
+1. Sorting the input array to easily detect duplicates.
+2. Tracking used elements with a used boolean array.
+3. Backtracking by recursively adding numbers to a temporary list (templist) and removing them after exploring all possibilities.
+4. Skipping duplicates to ensure only unique permutations are stored in result.
+The permuteUnique function initializes the process and returns all unique permutations.
+
+
+
+
+
+
