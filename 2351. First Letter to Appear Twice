@@ -1,0 +1,32 @@
+# 2351. First Letter to Appear Twice
+
+class Solution {
+public:
+    char repeatedCharacter(string s) {
+        vector<int> freq(26,0);
+        for(char c: s){
+            freq[c-'a']++;
+            if(freq[c-'a']==2)return c;
+        }
+        return '\0';
+    }
+};
+
+
+Here's explanation of the code:
+
+Frequency Array: A vector freq[26] is used to track the occurrence
+of each character ('a' to 'z') in the string s.
+
+Iterate Through String: The loop goes through each character in 
+the string, and for each character, its corresponding frequency is
+incremented.
+
+First Repeated Character: As soon as a character's frequency
+reaches 2, it's returned as the first repeated character.
+
+ If no character repeats, the function returns '\0' (null character).
+
+Time Complexity: O(N)
+Space Complexity: O(1)
+This solution efficiently finds the first repeated character.
