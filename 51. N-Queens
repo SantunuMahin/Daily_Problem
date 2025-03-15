@@ -1,0 +1,66 @@
+# N-Queens
+
+class Solution {
+public:
+    bool isSafe(vector<string> &board,int row,int n,int clm){
+        //Horizontal
+        for(int j = 0; j<n;j++){
+            if(board[row][j] == 'Q') return false; 
+        }
+        //Vartical
+        for(int i = 0; i<n;i++){
+            if(board[i][clm] == 'Q') return false; 
+        }
+        //Left diognal
+        for(int i = row,j=clm; i>=0 && j>=0;i--,j--){
+            if(board[i][j] == 'Q')return false;
+        }
+        //Right diognal
+        for(int i = row,j=clm; i>=0 && j>=0;i--,j++){
+            if(board[i][j] == 'Q')return false;
+        }
+        return true;
+    };
+
+    void nQueens( vector<string> &board,int row,int n,vector<vector<string>> &ans) {
+        if(n==row){
+            ans.push_back({board});
+            return;
+        }
+
+        for(int clm = 0;clm<n;clm++){
+            if(isSafe(board,row,n,clm)){
+                board[row][clm] = 'Q';
+                nQueens(board,row+1,n,ans);
+                board[row][clm] ='.'; 
+            }
+        }
+    }
+    vector<vector<string>> solveNQueens(int n) {
+        vector<string>board(n,string(n,'.'));
+        vector<vector<string>> ans;
+        nQueens(board,0,n,ans);
+        return ans;
+    }
+};
+
+
+**This  solution tackles the N-Queens problem using recursion and backtracking. **
+It consists of three main functions:
+
+**isSafe Function:**
+This function checks if placing a queen at a given position is secure. It scans the current
+row, column, and both diagonals for any queen ('Q'). If another queen is detected in any
+of these directions, the function returns false, indicating that the position is unsafe.
+
+**nQueens Function:**
+This recursive function attempts to place a queen in every row. For each row, it iterates
+through all columns and uses isSafe to determine if placing a queen is valid. If valid, it 
+places a queen and proceeds to the next row. When all queens are placed (i.e., the 
+current row equals the board size), the current board configuration is added to the list
+of solutions. The function then backtracks by removing the queen and trying alternative
+positions.
+
+**solveNQueens Function:**
+This function initializes an empty board and calls the nQueens function starting from 
+row 0. It ultimately returns all the valid board configurations found.
