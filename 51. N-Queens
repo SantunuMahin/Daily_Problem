@@ -1,5 +1,7 @@
 # N-Queens
 
+Problem Link: https://leetcode.com/problems/n-queens/description/?envType=problem-list-v2&envId=backtracking
+
 class Solution {
 public:
     bool isSafe(vector<string> &board,int row,int n,int clm){
@@ -64,3 +66,4 @@ positions.
 **solveNQueens Function:**
 This function initializes an empty board and calls the nQueens function starting from 
 row 0. It ultimately returns all the valid board configurations found.
+
