@@ -1,0 +1,147 @@
+# Rat in a Maze Problem 
+Problem link:  https://www.geeksforgeeks.org/problems/rat-in-a-maze-problem/1
+
+Solution:
+
+#include <bits/stdc++.h>
+using namespace std;
+#define fast                          \
+    ios_base::sync_with_stdio(false); \
+    cin.tie(nullptr);                 \
+    cout.tie(nullptr);
+
+class Solution
+{
+public:
+    void helper(vector<vector<int>> &mat, int row, int col, vector<string> &ans, string path, vector<vector<bool>> &vis)
+    {
+        int n = mat.size();
+
+        if (row < 0 || col < 0 || row >= n || col >= n || mat[row][col] == 0 || vis[row][col])
+            return;
+
+        if (row == n - 1 && col == n - 1)
+        {
+            ans.push_back(path);
+            return;
+        }
+
+        vis[row][col] = true;
+
+        // Down call
+        helper(mat, row + 1, col, ans, path + "D", vis);
+
+        // Right call
+        helper(mat, row, col + 1, ans, path + "R", vis);
+
+        // Left call
+        helper(mat, row, col - 1, ans, path + "L", vis);
+
+        // Up call
+        helper(mat, row - 1, col, ans, path + "U", vis);
+
+        vis[row][col] = false; // Backtrack
+    }
+
+    vector<string> findPath(vector<vector<int>> &mat)
+    {
+        int n = mat.size();
+        vector<string> ans;
+        vector<vector<bool>> vis(n, vector<bool>(n, false));
+
+        // If start or end is blocked, return empty path
+        if (mat[0][0] == 0 || mat[n - 1][n - 1] == 0)
+            return ans;
+
+        helper(mat, 0, 0, ans, "", vis);
+        return ans;
+    }
+};
+
+int main()
+{
+    fast;
+    int n;
+    cin >> n;
+    vector<vector<int>> mat(n, vector<int>(n));
+
+    for (int i = 0; i < n; i++)
+    {
+        for (int j = 0; j < n; j++)
+        {
+            cin >> mat[i][j];
+        }
+    }
+
+    Solution obj;
+    vector<string> ans = obj.findPath(mat);
+
+    if (ans.empty())
+    {
+        cout << "[]";
+    }
+    else
+    {
+        for (auto &a : ans)
+        {
+            cout << a << endl;
+        }
+    }
+
+    return 0;
+}
+
+
+
+This code is a C++ solution for finding all possible paths from the top-left corner
+to the bottom-right corner of an N x N matrix where movement is restricted to valid 
+cells (cells with value 1). The allowed movements are Down ('D'), Right ('R'), Left
+('L'), and Up ('U').
+
+Code Breakdown
+1. Understanding the findPath function
+This function is the main entry point:
+
+It initializes an empty result list (ans) to store valid paths.
+
+It creates a visited matrix (vis) to track visited positions.
+
+If the starting position (0,0) or ending position (N-1, N-1)
+is blocked (0), it returns an empty list.
+
+It calls the recursive helper function to explore all paths.
+
+2. Recursive helper function
+This function explores all possible paths using backtracking.
+
+Base cases:
+
+If the position is out of bounds, a 0 cell (blocked), or
+already visited, the function returns immediately.
+
+If the function reaches the bottom-right corner, it adds
+the path to the answer list and returns.
+
+Mark the current cell as visited to avoid revisiting.
+
+Recursive calls explore all four directions:
+
+Move Down (D) → helper(mat, row + 1, col, ans, path + "D", vis);
+
+Move Right (R) → helper(mat, row, col + 1, ans, path + "R", vis);
+
+Move Left (L) → helper(mat, row, col - 1, ans, path + "L", vis);
+
+Move Up (U) → helper(mat, row - 1, col, ans, path + "U", vis);
+
+Backtracking step: After exploring, mark the cell as unvisited
+(vis[row][col] = false) to allow other paths to pass through.
+
+
+
+
+Time & Space Complexity
+Time Complexity: O(4^(N²)) in the worst case (since each cell has four choices).
+
+Space Complexity: O(N²) (for the visited matrix and recursion depth).
+
