@@ -1,0 +1,49 @@
+# 24. Swap Nodes in Pairs
+
+link : https://leetcode.com/problems/swap-nodes-in-pairs/
+
+class Solution {
+    public ListNode swapPairs(ListNode head) {
+        if(head==null || head.next == null) return head;
+
+        ListNode newhead = head.next;
+        ListNode pre = null;
+        while(head != null && head.next!=null){
+            ListNode first = head;
+            ListNode second = head.next;
+            // swaping
+            first.next =second.next;
+            second.next = first;
+
+            if(pre != null){
+                pre.next = second;
+            }
+            pre = first;
+            head = first.next;
+
+        }
+        return newhead;
+    }
+}
+
+
+How It Works:
+1. Edge Case Handling: If the list is empty or has one node, return it as is.
+
+2. Initialize Pointers:
+   newhead = head.next (new head of the list).
+   pre = null (tracks the previous node).
+
+3. Swap Nodes in Pairs:
+   Identify first = head and second = head.next.
+   Swap: first.next = second.next, second.next = first.
+   Update pre.next = second (connect previous pair).
+   Move to the next pair (pre = first, head = first.next).
+4. Return newhead, the new head of the swapped list.
+
+Example:
+Input: 1 → 2 → 3 → 4
+Output: 2 → 1 → 4 → 3
+
+Time Complexity: O(n) (each node is processed once).
+Space Complexity: O(1) (no extra space used).
