@@ -39,6 +39,7 @@ How It Works:
    Swap: first.next = second.next, second.next = first.
    Update pre.next = second (connect previous pair).
    Move to the next pair (pre = first, head = first.next).
+
 4. Return newhead, the new head of the swapped list.
 
 Example:
