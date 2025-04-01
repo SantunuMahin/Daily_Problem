@@ -1,0 +1,66 @@
+# 79. Word Search
+
+Problem Link : https://leetcode.com/problems/word-search/description/?envType=problem-list-v2&envId=backtracking
+
+Code :
+
+class Solution {
+public:
+    bool backtrack(vector<vector<char>>& board, int row, int col, string& word, int i) {
+        int n = board.size();
+        int m = board[0].size();
+        if (row < 0 || col < 0 || row >= n || col >= m || board[row][col] != word[i]) 
+            return false;
+
+        if (i == word.size() - 1) return true;
+        char temp = board[row][col];
+        board[row][col] = '@';
+
+        if(backtrack(board, row + 1, col, word, i + 1) ||
+                   backtrack(board, row, col + 1, word, i + 1) ||
+                   backtrack(board, row - 1, col, word, i + 1) ||
+                   backtrack(board, row, col - 1, word, i + 1)) return true;
+
+        board[row][col] = temp;
+        return false;
+    }
+
+    bool exist(vector<vector<char>>& board, string word) {
+        int n = board.size();
+        int m = board[0].size();
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (backtrack(board, i, j, word, 0))
+                    return true;
+            }
+        }
+        return false;
+    }
+};
+
+--Explanations--
+
+How it Works:
+1. exist function: 
+	 * Iterates through each cell of the board.
+   * If the first character of word matches board[i][j],
+  	it calls backtrack to search for the rest of the word.
+
+2. backtrack function (Recursive Search)
+	* Base Cases:
+		Returns false if out of bounds or character mismatch.
+		Returns true if all characters in word are matched (i.e., i == word.size() - 1).
+	* Marking & Exploring:
+		Temporarily marks board[row][col] = '@' to prevent revisiting.
+		Recursively searches four directions (down, right, up, left).
+		If any path returns true, the word exists.
+
+ * Backtracking:
+    If no valid path is found, restores board[row][col] to its original character.
+
+3. Complexity Analysis:
+* Time Complexity: O(N * M * 4^L)
+   N × M is the board size, and L is the word length.
+   In the worst case, each letter leads to 4 recursive calls.
+* Space Complexity: O(L) (recursion depth).
