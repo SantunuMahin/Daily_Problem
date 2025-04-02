@@ -1,0 +1,42 @@
+# 74. Search a 2D Matrix
+
+Problem link : https://leetcode.com/problems/search-a-2d-matrix/description/
+
+Code :
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int>>& mat, int tar) {
+        int n = mat.size();
+        int m = mat[0].size();
+        for (int i =0;i<n;i++){
+            int s =0,end = m-1;
+            while(s<=end){
+                int mid = s+(end-s)/2;
+                if(mat[i][mid]==tar){
+                    return true;
+                }
+                else if(mat[i][mid]>tar) end = mid-1;
+                else s= mid+1;
+            }
+        }
+        return false;
+    }
+};
+
+
+How It Works:
+1. Get Matrix Dimensions:
+n = number of rows, m = number of columns.
+
+2. Iterate Through Each Row:
+Perform binary search in each row.
+
+3 . Binary Search in a Row:
+Find the middle element.
+If it matches tar, return true.
+If it's greater, search the left half.
+If it's smaller, search the right half.
+Return false if not found.
+
+4. Time Complexity:
+O(n log m) (binary search on m elements for n rows).
