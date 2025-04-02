@@ -1,0 +1,27 @@
+# 2529. Maximum Count of Positive Integer and Negative Integer
+
+
+class Solution {
+public:
+    int maximumCount(vector<int>& nums) {
+        int n = nums.size();
+        int s =0,end = n-1;
+        int pc,nc =0;
+        //positive search
+        while(s<=end){
+            int mid = s+(end-s)/2;
+            if(nums[mid]>0) end = mid-1;
+            else s =mid+1;
+        }
+        pc = n-s;
+        s =0,end = n-1;
+        //negetive search
+        while(s<=end){
+            int mid = s+(end-s)/2;
+            if(nums[mid]<0)s = mid+1;
+            else end =mid-1;
+        }
+        nc = s;
+        return max(pc,nc);
+    }
+};
