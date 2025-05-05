@@ -1,0 +1,84 @@
+**Palindrome Partitioning**
+
+Problem link: https://leetcode.com/problems/palindrome-partitioning/description/?envType=problem-list-v2&envId=backtracking
+
+**🚀 Solution Approach: Backtracking**
+
+We use recursive backtracking to explore every possible partition of the string:
+**🔧 Key Functions**
+
+✅ bool ispalin(string s)
+
+    Checks if a string s is a palindrome.
+
+    Compares s with its reversed version.
+
+✅ void getallparti(string s, vector<string>& partition, vector<vector<string>>& ans)
+
+    Recursively builds all valid palindrome partitions.
+
+    Base Case: If the string is empty, we’ve found a valid partition → add it to ans.
+
+    Recursive Step:
+
+        Try all prefixes of the string.
+
+        If the prefix is a palindrome:
+
+            Add it to the current path (partition).
+
+            Recur for the remaining string.
+
+            Backtrack by removing the last element (so we can try other possibilities).
+
+✅ vector<vector<string>> partition(string s)
+
+    Initializes helper data structures and starts the recursion.
+
+🧪 Example
+
+Input: "aab"
+Output:
+
+[
+  ["a", "a", "b"],
+  ["aa", "b"]
+]
+
+**📌 Solution Code**
+
+class Solution {
+public:
+    // Check if a string is a palindrome
+    bool ispalin(string s) {
+        string ns = s;
+        reverse(ns.begin(), ns.end());
+        return ns == s;
+    }
+
+    // Backtracking function to find all palindromic partitions
+    void getallparti(string s, vector<string>& partition, vector<vector<string>>& ans) {
+        if (s.empty()) {
+            ans.push_back(partition);  // Found a valid partition
+            return;
+        }
+
+        // Try every possible prefix
+        for (int i = 0; i < s.size(); i++) {
+            string part = s.substr(0, i + 1);
+            if (ispalin(part)) {
+                partition.push_back(part);                    // Choose
+                getallparti(s.substr(i + 1), partition, ans); // Explore
+                partition.pop_back();                         // Un-choose (backtrack)
+            }
+        }
+    }
+
+    // Main function to return all palindrome partitions
+    vector<vector<string>> partition(string s) {
+        vector<string> partition;
+        vector<vector<string>> ans;
+        getallparti(s, partition, ans);
+        return ans;
+    }
+};
