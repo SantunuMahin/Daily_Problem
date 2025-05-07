@@ -1,0 +1,47 @@
+LeetCode #41 — Hard
+Problem Link:https://leetcode.com/problems/first-missing-positive
+
+/*
+ * Problem: First Missing Positive (LeetCode 41)
+ * Difficulty: Hard
+ *
+ * Given an unsorted integer array, find the smallest missing positive integer.
+ * The algorithm must run in O(n) time and use constant extra space.
+ *
+ * Approach:
+ * - We place each number in its correct index position: value `x` should be at index `x - 1`.
+ * - Use cyclic sort logic: while current value is in range and not at its correct index, swap it.
+ * - After rearranging, the first index where nums[i] != i + 1 is the answer.
+ * - If all are correctly placed, return n + 1.
+ *
+ * Time Complexity: O(n)
+ * Space Complexity: O(1)
+ */
+
+class Solution {
+public:
+    int firstMissingPositive(vector<int>& nums) {
+        int n = nums.size();
+
+        // Step 1: Place each number at its correct index if it's within range [1, n]
+        for (int i = 0; i < n; ++i) {
+            // Swap nums[i] with nums[nums[i] - 1] until the number is out of range or in correct position
+            while (
+                nums[i] > 0 && nums[i] <= n &&
+                nums[i] != nums[nums[i] - 1]
+            ) {
+                swap(nums[i], nums[nums[i] - 1]);
+            }
+        }
+
+        // Step 2: Find the first index where the value is not equal to index + 1
+        for (int i = 0; i < n; ++i) {
+            if (nums[i] != i + 1) {
+                return i + 1;  // This is the smallest missing positive number
+            }
+        }
+
+        // Step 3: All numbers from 1 to n are present, so the answer is n + 1
+        return n + 1;
+    }
+};
