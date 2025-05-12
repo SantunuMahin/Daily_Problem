@@ -1,0 +1,91 @@
+42. Trapping Rain Water
+https://leetcode.com/problems/trapping-rain-water/description/
+
+class Solution {
+public:
+    /**
+     * Calculates how much rainwater can be trapped between bars of different heights.
+     *
+     * Given an array of non-negative integers representing an elevation map where the
+     * width of each bar is 1, this function computes how much water it can trap after raining.
+     *
+     * @param hei A vector of integers representing the height of bars.
+     * @return The total amount of trapped rainwater.
+     */
+    int trap(vector<int>& hei) {
+        int n = hei.size();
+        int l_wall = 0, r_wall = 0;
+
+        // Arrays to store the max height to the left and right of each position
+        vector<int> l_hei(n), r_hei(n);
+
+        // Fill l_hei: for each position, store the tallest bar to the left
+        for (int i = 0; i < n; i++) {
+            l_hei[i] = l_wall;
+            l_wall = max(l_wall, hei[i]);
+        }
+
+        // Fill r_hei: for each position, store the tallest bar to the right
+        for (int j = n - 1; j >= 0; j--) {
+            r_hei[j] = r_wall;
+            r_wall = max(r_wall, hei[j]);
+        }
+
+        int water = 0;
+
+        // Calculate trapped water at each position
+        for (int k = 0; k < n; k++) {
+            // Water can only be held if both sides are taller than the current height
+            int hold = min(l_hei[k], r_hei[k]);
+
+            // If the current height is less than the lowest of the two walls, water is trapped
+            water += max(0, hold - hei[k]);
+        }
+
+        return water;
+    }
+};
+
+
+#Explanation of the Rainwater Trapping Solution
+
+This C++ code solves the "Trapping Rain Water" problem, which calculates how much rainwater can be trapped between the bars of a given elevation map. Here's an easy-to-understand explanation:
+Approach (Two-Pointer Technique with Preprocessing)
+
+The solution uses two auxiliary arrays to store the highest walls to the left and right of each position, then calculates the trapped water at each point.
+Steps:
+
+    Left Pass (Left to Right Scan):
+
+        We create an array l_hei that stores the highest wall to the left of each position.
+
+        As we move from left to right, we keep track of the maximum height seen so far (l_wall).
+
+    Right Pass (Right to Left Scan):
+
+        Similarly, we create r_hei array storing the highest wall to the right of each position.
+
+        We move from right to left, updating the maximum height (r_wall).
+
+    Water Calculation:
+
+        For each position, the water trapped is determined by the shorter of the left and right walls.
+
+        We subtract the current height (if any) since water can only sit above the ground level.
+
+Example:
+
+For input [0,1,0,2,1,0,1,3,2,1,2,1]:
+
+    Left max array: [0,0,1,1,2,2,2,2,3,3,3,3]
+
+    Right max array: [3,3,3,3,3,3,3,2,2,2,1,0]
+
+    Water at each point: min(left,right) - height
+
+Complexity:
+
+    Time: O(n) - We make three passes through the array
+
+    Space: O(n) - We use two additional arrays of size n
+
