@@ -1,5 +1,7 @@
 42. Trapping Rain Water
 https://leetcode.com/problems/trapping-rain-water/description/
+company ask(Google, Microsoft, Amazon, Facebook,Apple) and (Accenture, Cognizant, MindTree, VMware, Capgemini, Deloitte, Wipro, TCS,Infosys)
+
 
 class Solution {
 public:
