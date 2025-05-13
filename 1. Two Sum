@@ -1,0 +1,111 @@
+1. Two Sum
+https://leetcode.com/problems/two-sum/description/
+
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& nums, int target) {
+        // Create a hash map to store value-index pairs
+        unordered_map<int, int> numMap;
+        // Vector to store the result indices
+        vector<int> result;
+        
+        // Iterate through the array
+        for(int i = 0; i < nums.size(); i++) {
+            int currentNum = nums[i];
+            int complement = target - currentNum;
+            
+            // Check if the complement exists in the map
+            if(numMap.find(complement) != numMap.end()) {
+                // If found, add the indices to the result
+                result.push_back(i);
+                result.push_back(numMap[complement]);
+                break;
+            }
+            
+            // Store the current number and its index in the map
+            numMap[currentNum] = i;
+        }
+        
+        return result;
+    }
+};
+
+
+
+Explanation
+Problem Statement
+
+Given an array of integers nums and an integer target, return the indices of the two numbers that add up to the target.
+Approach
+
+The solution uses a hash map (dictionary) to efficiently find the complement of each number that would sum to the target. This approach has O(n) time complexity.
+Code Walkthrough
+
+    Initialization
+    
+
+unordered_map<int, int> numMap;
+vector<int> result;
+
+    numMap stores numbers as keys and their indices as values
+
+    result will hold the two indices we return
+
+Iterate through the array
+
+
+for(int i = 0; i < nums.size(); i++) {
+
+    Loop through each element in nums with its index
+
+Calculate complement
+
+
+int currentNum = nums[i];
+int complement = target - currentNum;
+
+    For each number, calculate what other number (complement) would sum to the target
+
+Check for complement in map
+
+
+if(numMap.find(complement) != numMap.end()) {
+
+    If the complement exists in our map, we've found our pair
+
+Store result and break
+
+result.push_back(i);
+result.push_back(numMap[complement]);
+break;
+
+    Add both indices to the result (current index and complement's index)
+
+    Exit the loop since we found the solution
+
+Store current number in map
+    numMap[currentNum] = i;
+
+        If no complement found yet, store the current number with its index for future checks
+
+Example
+
+For nums = [2,7,11,15] and target = 9:
+
+    First iteration (i=0, num=2):
+
+        complement = 7
+
+        7 not in map → store {2:0}
+
+    Second iteration (i=1, num=7):
+
+        complement = 2
+
+        2 is in map → return [1,0]
+
+Complexity
+
+    Time: O(n) - Single pass through the array
+
+    Space: O(n) - Worst case we store all elements in the map
