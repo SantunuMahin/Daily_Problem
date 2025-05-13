@@ -18,7 +18,7 @@ This repository tracks my **daily LeetCode problem-solving journey**, documentin
 | Date       | Problem                     | Difficulty | Category      | Solution Link               |
 |------------|-----------------------------|------------|---------------|-----------------------------|
 | 2023-10-01 | Two Sum                     | Easy       | Array         | [Solution](https://github.com/SantunuMahin/Daily_Problem/blob/main/1.%20Two%20Sum) |
-| 2023-10-02 | Add Two Numbers             | Medium     | Linked List   | [Solution](./2023/10/02.cpp) |
+| 2023-10-02 | Add Two Numbers             | Medium     | Linked List   | [Solution](https://github.com/SantunuMahin/Daily_Problem/blob/main/2.%20Add%20Two%20Numbers) |
 | ...        | ...                         | ...        | ...           | ...                         |
 
 _This table will continue to grow as I solve problems daily._
