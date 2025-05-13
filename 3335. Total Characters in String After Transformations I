@@ -1,0 +1,131 @@
+#3335. Total Characters in String After Transformations I
+Problem: https://leetcode.com/problems/total-characters-in-string-after-transformations-i/description/
+
+
+class Solution {
+public:
+    int lengthAfterTransformations(string s, int t) {
+        const int MOD = 1e9 + 7;
+        vector<long long> freq(26, 0);
+        
+        // Initialize frequency
+        for(char c : s) {
+            freq[c - 'a']++;
+        }
+
+        // Perform t transformations
+        while(t--) {
+            vector<long long> newFreq(26, 0);
+            for(int i = 0; i < 25; ++i) {
+                newFreq[i + 1] = (newFreq[i + 1] + freq[i]) % MOD;
+            }
+            // 'z' becomes 'a' and 'b'
+            newFreq[0] = (newFreq[0] + freq[25]) % MOD;
+            newFreq[1] = (newFreq[1] + freq[25]) % MOD;
+
+            freq = newFreq;
+        }
+
+        // Sum all frequencies
+        long long total = 0;
+        for(int i = 0; i < 26; ++i) {
+            total = (total + freq[i]) % MOD;
+        }
+
+        return static_cast<int>(total);
+    }
+};
+
+
+Explanation of lengthAfterTransformations Function
+
+This function calculates the length of a string after performing a series of transformations on its characters. Here's a breakdown of how it works:
+Problem Understanding
+
+    We start with an initial string s and perform t transformations on it.
+
+    Each transformation follows these rules:
+
+        Every character in the string transforms to the next character in the alphabet (a→b, b→c, ..., y→z)
+
+        The character 'z' transforms into 'a' and 'b' (i.e., it splits into two characters)
+
+Approach
+
+Instead of actually modifying the string (which would be inefficient for large strings and many transformations), we track the frequency of each character and update these frequencies according to the transformation rules.
+Code Walkthrough
+1. Initialization
+cpp
+
+vector<long long> freq(26, 0);
+for(char c : s) {
+    freq[c - 'a']++;
+}
+
+    We create a frequency array of size 26 (one for each letter a-z)
+
+    We count how many times each character appears in the initial string
+
+2. Performing Transformations
+cpp
+
+while(t--) {
+    vector<long long> newFreq(26, 0);
+    for(int i = 0; i < 25; ++i) {
+        newFreq[i + 1] = (newFreq[i + 1] + freq[i]) % MOD;
+    }
+    // Handle 'z' transformation
+    newFreq[0] = (newFreq[0] + freq[25]) % MOD;
+    newFreq[1] = (newFreq[1] + freq[25]) % MOD;
+    
+    freq = newFreq;
+}
+
+For each transformation:
+
+    Create a new frequency array initialized to zeros
+
+    For each character from 'a' to 'y':
+
+        Move its count to the next character in the alphabet (a→b becomes freq[0] moves to newFreq[1])
+
+    For 'z':
+
+        Add its count to both 'a' (newFreq[0]) and 'b' (newFreq[1])
+
+    Update our frequency array with the new counts
+
+3. Calculating Total Length
+cpp
+
+long long total = 0;
+for(int i = 0; i < 26; ++i) {
+    total = (total + freq[i]) % MOD;
+}
+return static_cast<int>(total);
+
+    Sum up all the frequencies to get the total count of characters
+
+    Return the result modulo 1,000,000,007 (a large prime number to prevent integer overflow)
+
+Example
+
+Let's say we have string "aaz" and t=1:
+
+    Initial frequencies: a=2, z=1 (all others 0)
+
+    After transformation:
+
+        a→b: move 2 from a to b
+
+        z→a and b: move 1 from z to both a and b
+
+    New frequencies: a=1, b=3 (2 from a + 1 from z)
+
+    Total length = 1 + 3 = 4
+
+Complexity
+
+    Time: O(t * 26) - We perform t operations, each involving iterating through 26 characters
+
+    Space: O(1) - We only use fixed-size arrays (size 26) regardless of input size
