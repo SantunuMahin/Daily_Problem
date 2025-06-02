@@ -1,0 +1,100 @@
+#135. Candy
+Problem link: https://leetcode.com/problems/candy/description/?envType=daily-question&envId=2025-06-02
+
+code:
+class Solution {
+public:
+    int candy(vector<int>& ratings) {
+        int n = ratings.size();
+        if (n == 0) return 0;
+
+        vector<int> left(n, 1);
+        vector<int> right(n, 1);
+
+        // Left to right pass
+        for (int i = 1; i < n; ++i) {
+            if (ratings[i] > ratings[i - 1]) {
+                left[i] = left[i - 1] + 1;
+            }
+        }
+
+        // Right to left pass
+        for (int i = n - 2; i >= 0; --i) {
+            if (ratings[i] > ratings[i + 1]) {
+                right[i] = right[i + 1] + 1;
+            }
+        }
+
+        // Combine results
+        int totalCandies = 0;
+        for (int i = 0; i < n; ++i) {
+            totalCandies += max(left[i], right[i]);
+        }
+
+        return totalCandies;
+    }
+};
+
+
+🍬 Candy Distribution Problem - C++ Solution Explanation
+Problem Description
+Given an array of children's ratings, distribute candies such that:
+
+Every child gets at least one candy.
+
+Children with a higher rating than their immediate neighbors receive more candies.
+
+The goal is to return the minimum total number of candies required to satisfy these conditions.
+
+Approach: Two-Pass Greedy Algorithm
+We use two passes (left-to-right and right-to-left) to ensure that each child gets enough candies based on their neighbors' ratings.
+
+Step-by-step Explanation:
+cpp
+Copy
+Edit
+int candy(vector<int>& ratings)
+Initialization:
+
+int n = ratings.size();
+if (n == 0) return 0;
+
+vector<int> left(n, 1);
+vector<int> right(n, 1);
+We initialize two arrays left and right with all elements set to 1.
+
+These represent the candies given to each child when traversing from the left and right, respectively.
+
+Left-to-Right Pass:
+
+for (int i = 1; i < n; ++i) {
+    if (ratings[i] > ratings[i - 1]) {
+        left[i] = left[i - 1] + 1;
+    }
+}
+If a child has a higher rating than the one before, they get one more candy than that child.
+
+Right-to-Left Pass:
+
+for (int i = n - 2; i >= 0; --i) {
+    if (ratings[i] > ratings[i + 1]) {
+        right[i] = right[i + 1] + 1;
+    }
+}
+Similarly, if a child has a higher rating than the one after, they get one more candy than that child.
+
+Final Calculation:
+
+int totalCandies = 0;
+for (int i = 0; i < n; ++i) {
+    totalCandies += max(left[i], right[i]);
+}
+return totalCandies;
+For each child, we take the maximum of the candies assigned from both directions to satisfy both left and right neighbor conditions.
+
+We sum up the final candy count.
+
+Time and Space Complexity
+Time Complexity: O(n) — Two linear passes over the input.
+
+Space Complexity: O(n) — Two extra arrays used for tracking.
